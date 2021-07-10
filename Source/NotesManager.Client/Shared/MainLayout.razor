@@ -1,0 +1,32 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_currentTheme" />
+<MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.Small" />
+<MudSnackbarProvider />
+
+<MudLayout Style="height: 100%;">
+    <MudAppBar>
+        <MudButton Color="Color.Inherit" OnClick="@(() => NavigationManager.NavigateTo(AppPagesRoutes.MainPage))">
+            <MudText Typo="Typo.h5" Color="Color.Inherit">Notes Manager</MudText>
+        </MudButton>
+
+        <MudAppBarSpacer />
+        <MudAppBarSpacer />
+
+        <MudTooltip Text="Imort files">
+            <MudIconButton Icon="@Icons.Filled.ImportExport" Color="Color.Inherit" OnClick="@(() => NavigationManager.NavigateTo(AppPagesRoutes.ImportFilesPage))">
+            </MudIconButton>
+        </MudTooltip>
+
+        <MudTooltip Text="Toggle theme mode">
+            <MudIconButton Icon="@Icons.Filled.Brightness4" Color="Color.Inherit" OnClick="ToggleThemeMode"></MudIconButton>
+        </MudTooltip>
+
+    </MudAppBar>
+
+    <MudMainContent Class="ninty-percent-height">
+        <MudContainer Class="pr-5 pl-5 pt-3 inherit-height">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

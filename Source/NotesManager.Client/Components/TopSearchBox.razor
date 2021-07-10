@@ -1,0 +1,7 @@
+﻿<MudGrid>
+    <MudItem xs="12" sm="12" md="12" lg="12" xl="12">
+        <MudTextField T="string" @bind-Text="_searchText" Label="Search" Variant="Variant.Outlined" AdornmentColor="Color.Dark"
+                      Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnKeyDown="HandleKeyPressed"
+                      Placeholder="Search files..." Immediate="true" @onfocusout="HandleLostFocus"/>
+    </MudItem>
+</MudGrid>

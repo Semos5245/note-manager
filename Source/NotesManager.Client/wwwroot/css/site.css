@@ -1,0 +1,35 @@
+.full-height{
+    height:100%;
+}
+
+.ninty-percent-height{
+    height:97%;
+}
+
+.inherit-height{
+    height: inherit;
+}
+
+.item-selected{
+    background-color:lightgray;
+}
+
+.spinner {
+    border: 16px solid silver;
+    border-top: 16px solid #337AB7;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 700ms linear infinite;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}

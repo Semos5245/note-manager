@@ -1,0 +1,39 @@
+﻿<MudCard Class="inherit-height">
+    <MudTextField T="string" Variant="Variant.Text" Lines="10" @onkeypress="HandleKeyPressed" Immediate="true"
+                  TextChanged="HandleTextChanged" Text="@SelectedTextFile.Content" @attributes="_attributes"></MudTextField>
+    <MudGrid>
+        
+        <MudItem xs="6" sm="6" md="6" lg="6" xl="6">
+            @if (DidContentChange())
+            {
+                <MudText Typo="Typo.body2" Align="Align.Left" Color="Color.Warning">* unsaved changes</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.body2" Align="Align.Left" Color="Color.Success">Update to date</MudText>
+            }
+        </MudItem>
+        
+        <MudItem xs="6" sm="6" md="6" lg="6" xl="6">
+            <MudText Align="Align.Right" Typo="Typo.body2" Color="Color.Dark">Edited at @SelectedTextFile.ModificationDateUtc.ToString("yyyy/MM/dd HH:mm")</MudText>
+        </MudItem>
+        
+    </MudGrid>
+    <MudCardActions>
+        <MudGrid Spacing="2" Justify="Justify.Center">
+            <MudButton StartIcon="@Icons.Material.Filled.Save" Variant="Variant.Text" Color="Color.Success"
+                       OnClick="HandleSavePressed">Save</MudButton>
+
+            <MudButton StartIcon="@Icons.Material.Filled.ImportExport" Variant="Variant.Text" Color="Color.Success"
+                       OnClick="HandleExportClicked">Export</MudButton>
+        </MudGrid>
+        
+    </MudCardActions>
+</MudCard>
+
+@code {
+    protected Dictionary<string, object> _attributes = new Dictionary<string, object>
+    {
+        { "spellcheck", false }
+    };
+}

@@ -1,0 +1,41 @@
+﻿<MudPaper Elevation="3" Outlined="true" Square="true">
+    <MudListItem>
+        <MudGrid>
+            <MudItem xs="4" sm="4" md="4" lg="4" xl="4">
+                <MudTextField Error="_error" ErrorText="@_errorText" T="string" Text="@AdditionRequest?.FileName"
+                              TextChanged="HandleFileNameChanged" FullWidth="true" Label="Filename"></MudTextField>
+            </MudItem>
+
+            <MudItem xs="4" sm="4" md="4" lg="4" xl="4">
+                @if (Categories is not null)
+                {
+                    <MudSelect T="string" Error="_categoryError" Value="@AdditionRequest.CategoryId" ErrorText="@_categoryErrorText"
+                               Direction="Direction.Bottom" Immediate="true" Label="File category" ValueChanged="HandleCatgoryValueChanged">
+                        @foreach (var category in Categories)
+                        {
+                            <MudSelectItem T="string" Value="@category.Id">@category.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+            </MudItem>
+
+            <MudItem xs="4" sm="4" md="4" lg="4" xl="4">
+                @if (!string.IsNullOrEmpty(AdditionRequest.CategoryId))
+                {
+                    <MudSelect T="RequestAction" Direction="Direction.Bottom" Immediate="true" @bind-Value="AdditionRequest.Action">
+                        @if (_canChooseAddFile)
+                        {
+                            <MudSelectItem T="RequestAction" Value="RequestAction.Add">@RequestAction.Add</MudSelectItem>
+                        }
+                        else
+                        {
+                            <MudSelectItem T="RequestAction" Value="RequestAction.Overwrite">@RequestAction.Overwrite</MudSelectItem>
+                            <MudSelectItem T="RequestAction" Value="RequestAction.Append">@RequestAction.Append</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+            </MudItem>
+
+        </MudGrid>
+    </MudListItem>
+</MudPaper>  

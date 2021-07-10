@@ -1,0 +1,6 @@
+﻿<MudTr @onclick="HandleTextFileSelected" Class="@(IsSelected ? "item-selected" : "")">
+    <MudTd>
+        <MudText>@FilteredTextFile.TextFile.FileName</MudText>
+        <MudHighlighter Text="@FilteredTextFile.DisplayText" HighlightedText="@SearchText" Style="background-color:yellow" />
+    </MudTd>
+</MudTr>

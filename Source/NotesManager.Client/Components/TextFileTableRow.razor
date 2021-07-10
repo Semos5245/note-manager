@@ -1,0 +1,33 @@
+﻿@using NotesManager.Client.Events.TextFiles
+
+@if (_inEditMode)
+{
+    <MudTr @onfocusout="HandleLostFocus">
+        <MudTextField T="string" @bind-Text="_newName" Label="textFile name" Variant="Variant.Outlined" OnKeyPress="HandleKeyPressed"
+                      Error="_error" ErrorText="@_errorText" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Edit"
+                      AdornmentColor="Color.Warning" IconSize="Size.Small" Placeholder="Type some name" FullWidth="true"
+                      Disabled="(_editingTextFile || _deletingTextFile)" Immediate="true" AutoFocus="true" />
+
+    </MudTr>
+}
+else
+{
+    <MudTr @onclick="HandleTextFileSelected" Class="@(IsSelected ? "item-selected" : "")">
+        <MudTd>
+            @TextFile.FileName
+        </MudTd>
+        <MudTd Class="d-flex justify-content-end">
+            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Small" Variant="Variant.Text"
+                           Color="Color.Warning" Title="Edit" OnClick="GoToEditMode"
+                           Disabled="(_editingTextFile || _deletingTextFile)" />
+
+            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Variant="Variant.Text"
+                           Color="Color.Error" Title="Delete" OnClick="HandleDeleteButtonClicked"
+                           Disabled="(_editingTextFile || _deletingTextFile)" />
+
+            <MudIconButton Icon="@Icons.Material.Outlined.ImportExport" Size="Size.Small" Variant="Variant.Text"
+                           Color="Color.Success" Title="Export" OnClick="HandleExportButtonClicked"
+                           Disabled="(_editingTextFile || _deletingTextFile)" />
+        </MudTd>
+    </MudTr>
+}

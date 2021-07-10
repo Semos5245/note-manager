@@ -1,0 +1,64 @@
+﻿@using NotesManager.Client.Events.TextFiles
+
+<MudCard Class="inherit-height">
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6" Color="Color.Dark">Text files</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+
+    <MudCardContent>
+        <MudTextField T="string" @bind-Text="_searchText" Label="Search" Variant="Variant.Outlined" AdornmentColor="Color.Dark"
+                      Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnDebounceIntervalElapsed="FilterTextFiles"
+                      Placeholder="Search categories..." DebounceInterval="1500" OnKeyDown="HandleKeyPressedOnSearch"
+                      @onfocusout="HandleLostFocus" />
+        @if (_textFilesBackingField is null)
+        {
+            <MudGrid Justify="Justify.Center" Style="height: 300px; margin-top:1rem;">
+                <Spinner />
+            </MudGrid>
+        }
+
+        else
+        {
+            <MudSimpleTable Hover="true" Style="height:300px; margin-top: 2px;">
+                <tbody>
+                    @foreach (var textFile in _textFilesBackingField)
+                    {
+                        <TextFileTableRow TextFile="textFile" OnTextFileSelected="OnTextFileSelected"
+                                          OnTextFileDeleted="OnTextFileDeleted" OnTextFileEdited="OnTextFileEdited"
+                                          IsSelected="textFile == SelectedTextFile">
+
+                        </TextFileTableRow>
+                    }
+                </tbody>
+            </MudSimpleTable>
+        }
+
+    </MudCardContent>
+
+    <MudCardActions>
+        <MudTextField @bind-Value="_newTextFileName" Label="TextFile name" Variant="Variant.Outlined" OnKeyPress="HandleKeyPressedOnAddTextFile"
+                      Immediate="true" Error="_addTextFileError" ErrorText="@_addTextFileErrorText" Adornment="Adornment.End"
+                      AdornmentIcon="@Icons.Material.Outlined.Add" AdornmentColor="Color.Primary" FullWidth="true"
+                      IconSize="Size.Small" Placeholder="Type some name" Disabled="_addingTextFile" />
+    </MudCardActions>
+</MudCard>
+
+@code {
+    #region EventCallbacks
+
+    [Parameter]
+    public EventCallback<TextFileSelectedEventArgs> OnTextFileSelected { get; set; }
+
+    [Parameter]
+    public EventCallback<TextFileEditedEventArgs> OnTextFileEdited { get; set; }
+
+    [Parameter]
+    public EventCallback<TextFileDeletedEventArgs> OnTextFileDeleted { get; set; }
+
+    [Parameter]
+    public EventCallback<TextFileAddedEventArgs> OnTextFileAdded { get; set; }
+
+    #endregion
+}

@@ -1,0 +1,57 @@
+﻿@page "/import"
+
+<MudText Typo="Typo.h5" Align="Align.Center" Color="Color.Dark">Import files</MudText>
+
+<InputFile id="fileInput" OnChange="HandleInputFileChanged" hidden multiple accept=".txt" />
+<MudGrid Justify="Justify.Center">
+    <MudItem>
+        @if (!AlreadyUploadedFiles)
+        {
+            <MudButton HtmlTag="label"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Filled.CloudUpload"
+                       for="fileInput">
+                Upload your files
+            </MudButton>
+        }
+        else
+        {
+            <MudIconButton Color="Color.Primary" OnClick="Reset" Icon="@Icons.Material.Filled.Refresh" />
+        }
+    </MudItem>
+</MudGrid>
+
+@if (!string.IsNullOrEmpty(_errorText))
+{
+    <MudText Typo="Typo.body1" Color="Color.Error">@_errorText</MudText>
+}
+
+@if (AlreadyUploadedFiles)
+{
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" sm="12" md="12" lg="12" xl="12">
+            <MudList>
+                @for (int i = 0; i < _uploadedFiles.Count; i++)
+                {
+                    int index = i;
+                    <UploadFileItem @ref="_uploadFileItems[index]"
+                                    UploadedFile="_uploadedFiles[index]"
+                                    Categories="_categories">
+                    </UploadFileItem>
+                }
+            </MudList>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid Justify="Justify.Center">
+        @if (_processing)
+        {
+            <Spinner />
+        }
+        else
+        {
+            <MudButton Color="Color.Primary" EndIcon="@Icons.Material.Filled.UploadFile" OnClick="HandleImportClicked">Import</MudButton>
+        }
+    </MudGrid>
+}

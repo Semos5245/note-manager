@@ -1,0 +1,45 @@
+﻿@using NotesManager.Client.Events.Categories
+
+@if (_inEditMode)
+{
+    <MudTr @onfocusout="HandleLostFocus">
+        <MudTextField T="string"  @bind-Text="_newName" Label="category name" Variant="Variant.Outlined" OnKeyPress="HandleKeyPressed"
+                      Error="_error" ErrorText="@_errorText" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Outlined.Edit"
+                      AdornmentColor="Color.Warning" IconSize="Size.Small" Placeholder="Type some name" FullWidth="true"
+                      Disabled="(_editingCategory || _deletingCategory)"  Immediate="true" AutoFocus="true"/>
+
+    </MudTr>
+}
+else
+{
+    <MudTr @onclick="HandleCategorySelected" Class="@(IsSelected ? "item-selected" : "")">
+        <MudTd>
+            @Category.Name
+        </MudTd>
+        <MudTd Class="d-flex justify-content-end">
+            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Small" Variant="Variant.Text"
+                           Color="Color.Warning" Edge="Edge.End" Title="Edit" OnClick="GoToEditMode"
+                           Disabled="(_editingCategory || _deletingCategory)" />
+
+            <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Small" Variant="Variant.Text"
+                           Color="Color.Error" Edge="Edge.End" Title="Delete" OnClick="HandleDeleteButtonClicked"
+                           Disabled="(_editingCategory || _deletingCategory)" />
+        </MudTd>
+    </MudTr>
+}
+
+@code {
+
+    #region Event Callbacks
+
+    [Parameter]
+    public EventCallback<CategorySelectedEventArgs> OnCategorySelected { get; set; }
+
+    [Parameter]
+    public EventCallback<CategoryEditedEventArgs> OnCategoryEdited { get; set; }
+
+    [Parameter]
+    public EventCallback<CategoryDeletedEventArgs> OnCategoryDeleted { get; set; }
+
+    #endregion
+}

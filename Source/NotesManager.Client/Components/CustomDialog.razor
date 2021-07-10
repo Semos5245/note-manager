@@ -1,0 +1,34 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudText>@Message</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="HandleCancelClicked">Cancel</MudButton>
+        <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="HandleConfirmClicked">Confirm</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance DialogInstance { get; set; }
+
+    [Parameter] public string Message { get; set; }
+
+    [Parameter] public EventCallback OnConfirmClicked { get; set; }
+    [Parameter] public EventCallback OnCancelClicked { get; set; }
+
+    protected async Task HandleCancelClicked()
+    {
+        if (OnCancelClicked.HasDelegate)
+            await OnCancelClicked.InvokeAsync();
+
+        DialogInstance.Close(DialogResult.Ok(true));
+    }
+
+    protected async Task HandleConfirmClicked()
+    {
+        if (OnConfirmClicked.HasDelegate)
+            await OnConfirmClicked.InvokeAsync();
+
+        DialogInstance.Cancel();
+    }
+}

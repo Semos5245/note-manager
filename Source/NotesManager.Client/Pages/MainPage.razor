@@ -1,0 +1,45 @@
+﻿@page "/"
+
+<!-- Search box on top filling all the width -->
+<TopSearchBox OnEnterPressed="HandleEnterPressedOnTopSearchBox" OnSearchTextChanged="HandleSearchTextChanged"></TopSearchBox>
+
+<!-- Grid that has three sections -->
+<MudGrid Class="inherit-height">
+
+    <!-- Section 1: Categories -->
+    <MudItem xs="6" sm="6" md="6" lg="6" xl="6" Class="inherit-height">
+        <CategoriesSection Categories="_categories" OnCategorySelected="HandleCategorySelected"
+                           OnCategoryEdited="HandleCategoryEdited" OnCategoryDeleted="HandleCategoryDeleted"
+                           OnCategoryAdded="HandleCategoryAdded" SelectedCategory="_selectedCategory">
+        </CategoriesSection>
+    </MudItem>
+
+    <MudItem xs="6" sm="6" md="6" lg="6" xl="6" Class="inherit-height">
+        @if (_inGlobalSearchMode)
+        {
+            <!-- Section 2: Search Files by content -->
+            <SearchFilesByContentSection FilteredFiles="_filteredTextFiles" SelectedTextFile="_selectedTextFileByContent"
+                                         TextFileByContentSelected="HandleTextFileByContentSelected"
+                                         SearchText="@_globalSearchText">
+            </SearchFilesByContentSection>
+        }
+        else
+        {
+            <!-- Section 2: Text Files -->
+            <TextFilesSection TextFiles="_currentTextFiles" SelectedCategory="_selectedCategory"
+                              SelectedTextFile="_selectedTextFile" OnTextFileSelected="HandleTextFileSelected"
+                              OnTextFileAdded="HandleTextFileAdded" OnTextFileEdited="HandleTextFileEdited"
+                              OnTextFileDeleted="HandleTextFileDeleted">
+            </TextFilesSection>
+        }
+    </MudItem>
+
+    @if (_selectedTextFile != null)
+    {
+        <!-- Section 3: Writing and file content -->
+        <MudItem xs="12" sm="12" md="12" lg="12" xl="12" Class="inherit-height">
+            <TextEditorSection SelectedTextFile="_selectedTextFile"></TextEditorSection>
+        </MudItem>
+    }
+
+</MudGrid>
